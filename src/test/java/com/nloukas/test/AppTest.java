@@ -1,38 +1,33 @@
 package com.nloukas.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    private static Twitter twitter = new TwitterFactory().getInstance();
+
+    @BeforeClass
+    public static void authenticate()
     {
-        super( testName );
+        //  My Application's Consumer and Auth Access Token
+        twitter.setOAuthConsumer("<consumerKey>", "<consumerSecret>");
+        twitter.setOAuthAccessToken(new AccessToken("<token>", "<tokenSecret>"));
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
+    @Test
+    public void testFirstSearchTest() throws TwitterException
     {
-        return new TestSuite( AppTest.class );
-    }
+        QueryResult res = twitter.search(new Query("tweet"));
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
     }
 }
